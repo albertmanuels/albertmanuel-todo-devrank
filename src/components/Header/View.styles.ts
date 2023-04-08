@@ -6,6 +6,11 @@ export const header = css`
 	background: #16abf8;
 	align-items: center;
 	box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+	@media (max-width: 1024px) {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
 `;
 
 export const container = css`

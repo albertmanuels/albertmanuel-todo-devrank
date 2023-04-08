@@ -1,6 +1,6 @@
 import { css } from "@emotion/css";
 
-export const home = css`
+export const dashboard = css`
 	width: 100%;
 	margin: 0 auto;
 	padding-top: 43px;
@@ -18,6 +18,12 @@ export const todoHeader = css`
 	flex-direction: row;
 	justify-content: space-between;
 	margin-bottom: 55px;
+`;
+
+export const activityTitle = css`
+	font-size: 36px;
+	line-height: 54px;
+	font-weight: 700;
 `;
 
 export const addButton = css`

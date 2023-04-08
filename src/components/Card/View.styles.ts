@@ -9,6 +9,7 @@ export const card = css`
 	background: #ffffff;
 	padding: 22px 27px 0;
 	box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1);
+	text-decoration: none;
 
 	h3 {
 		font-weight: 700;
@@ -18,6 +19,12 @@ export const card = css`
 
 export const todoContent = css`
 	height: 166px;
+
+	h4 {
+		font-size: 18px;
+		font-weight: 700;
+		color: #111111;
+	}
 `;
 
 export const btnDelete = css`
