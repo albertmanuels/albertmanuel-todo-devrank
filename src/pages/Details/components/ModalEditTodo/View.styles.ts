@@ -142,6 +142,7 @@ export const priorityOptionList = css`
 export const priorityOption = css`
 	width: 100%;
 	display: flex;
+	position: relative;
 	align-items: center;
 	border-bottom: 1px solid #e5e5e5;
 	font-size: 16px;
@@ -164,10 +165,4 @@ export const iconCheck = css`
 	background: url(${IconCheckList});
 	background-size: 100%;
 	background-repeat: no-repeat;
-`;
-
-export const btnSelectPriorityContent = css`
-	display: flex;
-	flex-direction: row;
-	align-items: center;
 `;

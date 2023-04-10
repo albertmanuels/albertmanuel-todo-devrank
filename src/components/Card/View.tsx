@@ -34,10 +34,9 @@ const Card = (props: CardProps) => {
 
 			{isOpenModal && (
 				<ModalDelete
-					todoData={todo}
-					page="dashboard"
-					handleDeleteTodo={handleDeleteTodo}
-					setIsOpenModal={setIsOpenModal}
+					title={todo.title}
+					onDelete={() => handleDeleteTodo(todo.id)}
+					onClose={() => setIsOpenModal(false)}
 				/>
 			)}
 		</>

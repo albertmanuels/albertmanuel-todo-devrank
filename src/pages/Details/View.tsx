@@ -4,32 +4,36 @@ import * as css from "./View.styles";
 import TemplateLayout from "../../components/Template/View";
 import IconBackButton from "../../assets/icon-todo-back-button.svg";
 import IconPlus from "../../assets/icon-plus.svg";
-import { sortOptionLists } from "../../constants";
+import { sortOptionLists, KEY_ENTER } from "../../constants";
 import EmptyState from "../../components/EmptyState/View";
-import ModalDelete from "../../components/ModalDelete/View";
 import ModalAddTodo from "./components/ModalAddTodo/View";
-
-const NONACTIVE = 0;
-const KEY_ENTER = "Enter";
-const ACTIVE = 1;
+import TodoCard from "./components/TodoCard";
+import Alert from "../../components/Alert/View";
 
 const DetailPages = () => {
 	const navigate = useNavigate();
+
 	const {
 		isEdit,
 		setIsEdit,
 		isOpenSortList,
 		setIsOpenSortList,
 		todoItems,
+		sortedTodoItems,
+		setTodoItems,
 		handleAddTodoItems,
-		handleDeleteTodoItems,
-		isOpenModalDelete,
-		setIsOpenModalDelete,
 		handleChangeActivityTitle,
 		handleUpdateActivityTitle,
+		handleSelectSortItem,
 		isOpenModalAdd,
 		setIsOpenModalAdd,
 		activityTitle,
+		checkedList,
+		setCheckedList,
+		setShowAlert,
+		showAlert,
+		refetch,
+		sortedTodos,
 	} = useView();
 
 	return (
@@ -72,31 +76,44 @@ const DetailPages = () => {
 							</h1>
 						)}
 						<i
+							data-cy="todo-title-edit-button"
 							className={css.btnEditActivityTitle}
 							onClick={() => setIsEdit(true)}
 						/>
 					</div>
 
 					<div className={css.rightSideHeader}>
-						<div className={css.sortButtonWrapper}>
-							<button
-								className={css.btnSortList}
-								onClick={() => setIsOpenSortList(!isOpenSortList)}
-							>
-								<span className={css.iconSort} />
-							</button>
+						{sortedTodoItems.length > 0 && (
+							<div className={css.sortButtonWrapper}>
+								<button
+									data-cy="todo-sort-button"
+									className={css.btnSortList}
+									onClick={() => setIsOpenSortList(!isOpenSortList)}
+								>
+									<span className={css.iconSort} />
+								</button>
 
-							{isOpenSortList && (
-								<ul className={css.sortOptionListsContainer}>
-									{sortOptionLists.map((option) => (
-										<li key={option.id} className={css.sortOptionLists}>
-											<div className={css.iconOptions(option.icon)} />
-											<p className={css.sortOptionTitle}>{option.name}</p>
-										</li>
-									))}
-								</ul>
-							)}
-						</div>
+								{isOpenSortList && (
+									<ul className={css.sortOptionListsContainer}>
+										{sortOptionLists.map((option) => (
+											<li
+												key={option.id}
+												className={css.sortOptionLists}
+												onClick={() => handleSelectSortItem(option.value)}
+											>
+												<div className={css.iconOptions(option.icon)} />
+												<p className={css.sortOptionTitle}>{option.name}</p>
+
+												{sortedTodos === option.value && (
+													<i className={css.iconCheck} />
+												)}
+											</li>
+										))}
+									</ul>
+								)}
+							</div>
+						)}
+
 						<button
 							data-cy="todo-add-button"
 							className={css.addButton}
@@ -117,45 +134,31 @@ const DetailPages = () => {
 				</div>
 
 				<div className={css.container}>
-					{todoItems.length > 0 ? (
+					{sortedTodoItems.length > 0 ? (
 						<>
-							{todoItems?.map((todo) => (
-								<div key={todo.id} className={css.todoItemLists}>
-									<div className={css.leftSideTodoItem}>
-										<input
-											className={css.checkbox}
-											type="checkbox"
-											data-cy="todo-item-checkbox"
-										/>
-
-										<i className={css.iconDot(todo.priority)} />
-										<h4 className={css.todoTitle(todo.is_active === ACTIVE)}>
-											{todo.title}
-										</h4>
-										<div className={css.IconPencilTodoItem} />
-									</div>
-
-									<div>
-										<button
-											className={css.btnDeleteTodoItem}
-											onClick={() => setIsOpenModalDelete(true)}
-										/>
-									</div>
-
-									{isOpenModalDelete && (
-										<ModalDelete
-											todoData={todo}
-											handleDeleteTodo={handleDeleteTodoItems}
-											setIsOpenModal={setIsOpenModalDelete}
-										/>
-									)}
-								</div>
+							{sortedTodoItems.map((todo, idx) => (
+								<TodoCard
+									data-cy={`todo-item-${idx}`}
+									key={todo.id}
+									todo={todo}
+									todoItems={todoItems}
+									refetch={refetch}
+									checkedList={checkedList}
+									setCheckedList={setCheckedList}
+									setTodoItems={setTodoItems}
+									setShowAlert={setShowAlert}
+								/>
 							))}
 						</>
 					) : (
-						<EmptyState page="detail" onAddTodo={handleAddTodoItems} />
+						<EmptyState
+							page="detail"
+							onAddTodo={() => setIsOpenModalAdd(true)}
+						/>
 					)}
 				</div>
+
+				{showAlert && <Alert isOpen={showAlert} />}
 			</div>
 		</TemplateLayout>
 	);

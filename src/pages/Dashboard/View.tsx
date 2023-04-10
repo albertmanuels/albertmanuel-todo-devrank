@@ -31,9 +31,10 @@ const Dashboard = () => {
 				<div className={css.container}>
 					{todos.length > 0 ? (
 						<>
-							{todos.map((todo) => (
+							{todos.map((todo, idx) => (
 								<Card
 									key={todo.id}
+									data-cy={`activity-item-${idx}`}
 									todo={todo}
 									isOpenModal={isOpenModal}
 									todos={todos}

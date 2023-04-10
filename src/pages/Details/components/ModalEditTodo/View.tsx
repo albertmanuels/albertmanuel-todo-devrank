@@ -1,43 +1,38 @@
+import useView from "./View.hook";
 import * as css from "./View.styles";
 import { iconDot } from "../../View.styles";
-import { ModalAddTodoProps } from "./View.types";
-import useView from "./View.hook";
+import { ModalEditTodoProps } from "./View.types";
+import { PRIORITY_OPTIONS } from "../../../../constants";
 
-const ModalAddTodo = (props: ModalAddTodoProps) => {
-	const { onClose, onSave } = props;
-
+const ModalEditTodo = (props: ModalEditTodoProps) => {
+	const { onClose, onSave, todoData } = props;
 	const {
 		isOpenPriority,
 		setIsOpenPriority,
-		priorityOptionLists,
 		handleSelectPriority,
 		handleInputTodoTitle,
 		currentSelected,
-		addTodo,
-	} = useView();
+		editTodo,
+		priorityData,
+		onSelect,
+	} = useView(props);
 
 	return (
-		<div data-cy="modal-add" className={css.modal}>
+		<div className={css.modal}>
 			<div className={css.modalContent}>
 				<div className={css.modalHeader}>
-					<h4 data-cy="modal-add-title" className={css.modalTitle}>
-						Tambah List Item
-					</h4>
+					<h4 className={css.modalTitle}>Ubah List Item</h4>
 					<button
-						data-cy="modla-add-close-button"
 						type="button"
 						className={css.btnCloseModal}
-						onClick={() => onClose(false)}
+						onClick={onClose}
 					/>
 				</div>
 				<div className={css.modalBody}>
-					<label data-cy="modal-add-name-title" htmlFor="list-item">
-						NAMA LIST ITEM
-					</label>
+					<label htmlFor="list-item">NAMA LIST ITEM</label>
 					<input
-						data-cy="modal-add-name-input"
 						type="text"
-						value={addTodo.title}
+						value={editTodo.title}
 						placeholder="Tambahkan nama list item"
 						name="list-item"
 						className={css.inputListItem}
@@ -45,39 +40,38 @@ const ModalAddTodo = (props: ModalAddTodoProps) => {
 					/>
 
 					<div className={css.priority}>
-						<label data-cy="modal-add-priority-title" htmlFor="list-item">
-							PRIORITY
-						</label>
-						<div data-cy="modal-add-priority-dropdown">
+						<label htmlFor="list-item">PRIORITY</label>
+						<div>
 							<button
+								type="button"
 								className={css.btnSelectPriority}
 								onClick={() => setIsOpenPriority(!isOpenPriority)}
 							>
-								{addTodo.priorityTitle === "" ? (
-									"Pilih priority"
+								{!onSelect ? (
+									<>
+										<i className={iconDot(priorityData.value)} />
+										<span>{priorityData.title}</span>
+									</>
 								) : (
-									<div
-										data-cy="modal-add-priority-item"
-										className={css.btnSelectPriorityContent}
-									>
-										<i className={iconDot(addTodo.priorityValue)} />
-										{addTodo.priorityTitle}
-									</div>
+									<>
+										<i className={iconDot(editTodo.priorityValue)} />
+										<span>{editTodo.priorityTitle}</span>
+									</>
 								)}
 							</button>
+
 							{isOpenPriority && (
 								<div className={css.priorityOptionList}>
-									{priorityOptionLists.map((priority) => (
+									{PRIORITY_OPTIONS.map((priority) => (
 										<div
-											data-cy={`modal-add-priority-${priority.value}`}
 											key={priority.id}
 											className={css.priorityOption}
 											onClick={() => handleSelectPriority(priority)}
 										>
 											<i className={iconDot(priority.value)} />
 											<p>{priority.title}</p>
-
-											{currentSelected === priority.value && (
+											{(currentSelected === priority.value ||
+												editTodo.priorityValue === priority.value) && (
 												<i className={css.iconCheck} />
 											)}
 										</div>
@@ -90,10 +84,11 @@ const ModalAddTodo = (props: ModalAddTodoProps) => {
 
 				<div className={css.modalFooter}>
 					<button
-						data-cy="modal-add-save-button"
 						className={css.btnSave}
-						onClick={() => onSave(addTodo)}
-						disabled={addTodo.title === "" || addTodo.priorityTitle === ""}
+						type="submit"
+						onClick={() => {
+							onSave(editTodo, todoData);
+						}}
 					>
 						Simpan
 					</button>
@@ -103,4 +98,4 @@ const ModalAddTodo = (props: ModalAddTodoProps) => {
 	);
 };
 
-export default ModalAddTodo;
+export default ModalEditTodo;

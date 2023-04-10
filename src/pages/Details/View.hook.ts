@@ -1,6 +1,7 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { TodoItems } from "./View.types";
+import { AddTodo, TodoItems } from "./View.types";
+import { useFetchActivity } from "../../hooks/useFetchActivity";
 
 const useView = () => {
 	const { id } = useParams();
@@ -10,32 +11,74 @@ const useView = () => {
 	const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
 	const [isOpenModalAdd, setIsOpenModalAdd] = useState(false);
 	const [activityTitle, setActivityTitle] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [checkedList, setCheckedList] = useState({});
+	const [showAlert, setShowAlert] = useState(false);
+	const [sortedTodos, setSortedTodos] = useState("oldest");
+	const sortedTodoItems = todoItems.sort((a, b) => {
+		if (sortedTodos === "oldest") {
+			return a.id - b.id;
+		} else if (sortedTodos === "latest") {
+			return b.id - a.id;
+		} else if (sortedTodos === "az") {
+			return a.title.localeCompare(b.title);
+		} else if (sortedTodos === "za") {
+			return b.title.localeCompare(a.title);
+		} else if (sortedTodos === "unfinished") {
+			return b.is_active - a.is_active;
+		} else {
+			return 0;
+		}
+	});
+
+	const { data, refetch } = useFetchActivity(
+		`https://todo.api.devcode.gethired.id/activity-groups/${id}?email=albertmanuels10@gmail.com`
+	);
+
+	const { todo_items, title } = data;
 
 	useEffect(() => {
-		const getData = async () => {
-			try {
-				const fetchData = await fetch(
-					`https://todo.api.devcode.gethired.id/activity-groups/${id}%7D?email=albertmanuels10@gmail.com`
-				);
+		setTodoItems(todo_items);
+		setActivityTitle(title);
+	}, [title, todo_items]);
 
-				const res = await fetchData;
+	const handleAddTodoItems = async (addTodoVal: AddTodo) => {
+		try {
+			setLoading(true);
+			const fetchData = await fetch(
+				`https://todo.api.devcode.gethired.id/todo-items`,
+				{
+					method: "POST",
+					headers: {
+						"Content-type": "application/json; charset=UTF-8",
+					},
+					body: JSON.stringify({
+						activity_group_id: Number(id),
+						id: 0,
+						is_active: Number(1),
+						priority: addTodoVal.priorityValue,
+						title: addTodoVal.title,
+					}),
+				}
+			);
 
-				const status = res.status;
+			const result = await fetchData;
+			const status = result.status;
 
-				if (status !== 200) throw new Error();
-
-				const data = await res.json();
-
-				const todoItems = data.todo_items;
-				const title = data.title;
-				setActivityTitle(title);
-				setTodoItems(todoItems);
-			} catch (error) {
-				console.log(error);
+			if (status !== 201) {
+				return;
 			}
-		};
-		getData();
-	}, [id]);
+
+			const data = await result.json();
+
+			setTodoItems((todo) => [...todo, data]);
+			setIsOpenModalAdd(false);
+			setLoading(false);
+			refetch();
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	const handleChangeActivityTitle = (event: ChangeEvent<HTMLInputElement>) => {
 		const title = event.target.value;
@@ -68,60 +111,21 @@ const useView = () => {
 		}
 	};
 
-	const handleAddTodoItems = async () => {
-		try {
-			const fetchData = await fetch(
-				`https://todo.api.devcode.gethired.id/todo-items`,
-				{
-					method: "POST",
-					headers: {
-						"Content-type": "application/json; charset=UTF-8",
-					},
-					body: JSON.stringify({
-						activity_group_id: id,
-						id: 0,
-						is_active: 1,
-						priority: "very-high",
-						title: "aa",
-					}),
-				}
-			);
+	const handleSelectSortItem = (type: string) => {
+		setSortedTodos(type);
+	};
 
-			const result = await fetchData;
-			const status = result.status;
-
-			if (status !== 201) {
-				return;
+	useEffect(() => {
+		const handleShowAlert = () => {
+			if (showAlert) {
+				setTimeout(() => {
+					setShowAlert(false);
+				}, 3000);
 			}
+		};
 
-			const data = await result.json();
-			setTodoItems((todo) => [...todo, data]);
-			setIsOpenModalAdd(false);
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const handleDeleteTodoItems = async (todoId: number) => {
-		setIsOpenModalDelete(true);
-		try {
-			const fetchData = await fetch(
-				`https://todo.api.devcode.gethired.id/todo-items/${todoId}`,
-				{
-					method: "DELETE",
-				}
-			);
-
-			const status = await fetchData.status;
-
-			if (status !== 200) return;
-
-			setIsOpenModalDelete(false);
-			setTodoItems(todoItems.filter((todo) => todo.id !== todoId));
-		} catch (err) {
-			console.log(err);
-		}
-	};
+		handleShowAlert();
+	}, [showAlert]);
 
 	return {
 		isEdit,
@@ -129,15 +133,25 @@ const useView = () => {
 		isOpenSortList,
 		setIsOpenSortList,
 		todoItems,
-		handleAddTodoItems,
-		handleDeleteTodoItems,
+		sortedTodoItems,
+		sortedTodos,
+		setTodoItems,
 		isOpenModalDelete,
 		setIsOpenModalDelete,
 		handleChangeActivityTitle,
 		handleUpdateActivityTitle,
+		handleSelectSortItem,
+		handleAddTodoItems,
 		isOpenModalAdd,
 		setIsOpenModalAdd,
 		activityTitle,
+		loading,
+		setLoading,
+		checkedList,
+		setCheckedList,
+		setShowAlert,
+		showAlert,
+		refetch,
 	};
 };
 

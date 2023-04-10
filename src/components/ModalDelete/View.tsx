@@ -1,11 +1,9 @@
-import useView from "./View.hook";
 import * as css from "./View.styles";
 import type { ModalDeleteProps } from "./View.types";
 import IconWarning from "../../assets/icon-warning.png";
 
 const ModalDelete = (props: ModalDeleteProps) => {
-	const { setIsOpenModal, page } = props;
-	const { title, onDelete } = useView(props);
+	const { title, onClose, onDelete } = props;
 
 	return (
 		<div className={css.modal}>
@@ -14,16 +12,12 @@ const ModalDelete = (props: ModalDeleteProps) => {
 					<img src={IconWarning} alt="icon warning" />
 				</div>
 				<p className={css.title}>
-					Apa anda yakin menghapus
-					{page === "dashboard" ? "activity" : "List Item"}
+					Apa anda yakin menghapus activity
 					<br />
 					<b>"{title}"?</b>
 				</p>
 				<div>
-					<button
-						className={css.btnCancel}
-						onClick={() => setIsOpenModal(false)}
-					>
+					<button className={css.btnCancel} onClick={onClose}>
 						Cancel
 					</button>
 					<button className={css.btnDelete} onClick={onDelete}>

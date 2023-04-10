@@ -1,5 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
 
+export interface AddTodo {
+	title: string;
+	priorityTitle: string;
+	priorityValue: string;
+}
+
 export interface ModalAddTodoProps {
 	todoData: Array<{
 		id: number;
@@ -8,6 +14,6 @@ export interface ModalAddTodoProps {
 		is_active: number;
 		priority: string;
 	}>;
-	onSave: () => void;
+	onSave: (addTodoItem: AddTodo) => void;
 	onClose: Dispatch<SetStateAction<boolean>>;
 }

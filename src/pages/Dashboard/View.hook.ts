@@ -3,22 +3,26 @@ import type { Todos } from "./View.types";
 
 const useView = () => {
 	const [todos, setTodos] = useState<Todos>([]);
-
-	const getTodos = async () => {
-		try {
-			const fetchData = await fetch(
-				"https://todo.api.devcode.gethired.id/activity-groups?email=albertmanuels10@gmail.com"
-			);
-			const res = await fetchData.json();
-			const data = res.data;
-
-			setTodos(data);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
+		const getTodos = async () => {
+			try {
+				setLoading(true);
+				const fetchData = await fetch(
+					"https://todo.api.devcode.gethired.id/activity-groups?email=albertmanuels10@gmail.com"
+				);
+
+				const res = await fetchData.json();
+
+				const data = res.data;
+				setTodos(data);
+				setLoading(false);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+
 		getTodos();
 	}, []);
 
@@ -50,7 +54,7 @@ const useView = () => {
 		}
 	};
 
-	return { todos, setTodos, handleAddTodos };
+	return { todos, setTodos, handleAddTodos, loading };
 };
 
 export default useView;

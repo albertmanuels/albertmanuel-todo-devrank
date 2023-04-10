@@ -1,3 +1,9 @@
+export interface AddTodo {
+	title: string;
+	priorityTitle: string;
+	priorityValue: string;
+}
+
 export type TodoItems = Array<{
 	id: number;
 	title: string;
