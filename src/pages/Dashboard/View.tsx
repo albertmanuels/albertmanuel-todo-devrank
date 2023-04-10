@@ -3,7 +3,6 @@ import TemplateLayout from "../../components/Template/View";
 import useView from "./View.hook";
 import * as css from "./View.styles";
 import IconPlus from "../../assets/icon-plus.svg";
-import { useState } from "react";
 import EmptyState from "../../components/EmptyState/View";
 import Alert from "../../components/Alert/View";
 
