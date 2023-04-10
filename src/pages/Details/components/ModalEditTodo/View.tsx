@@ -22,8 +22,8 @@ const ModalEditTodo = (props: ModalEditTodoProps) => {
 	useClickOutside(modalEditRef, () => onClose());
 
 	return (
-		<div className={css.modal}>
-			<div data-cy="modal-add" ref={modalEditRef} className={css.modalContent}>
+		<div data-cy="modal-add" className={css.modal}>
+			<div ref={modalEditRef} className={css.modalContent}>
 				<div className={css.modalHeader}>
 					<h4 className={css.modalTitle} data-cy="modal-add-title">
 						Ubah List Item

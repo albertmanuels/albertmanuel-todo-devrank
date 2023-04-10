@@ -7,24 +7,24 @@ const useView = () => {
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);
 
+	const getTodos = async () => {
+		try {
+			setLoading(true);
+			const fetchData = await fetch(
+				"https://todo.api.devcode.gethired.id/activity-groups?email=albertmanuels10@gmail.com"
+			);
+
+			const res = await fetchData.json();
+
+			const data = res.data;
+			setTodos(data);
+			setLoading(false);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	useEffect(() => {
-		const getTodos = async () => {
-			try {
-				setLoading(true);
-				const fetchData = await fetch(
-					"https://todo.api.devcode.gethired.id/activity-groups?email=albertmanuels10@gmail.com"
-				);
-
-				const res = await fetchData.json();
-
-				const data = res.data;
-				setTodos(data);
-				setLoading(false);
-			} catch (err) {
-				console.log(err);
-			}
-		};
-
 		getTodos();
 	}, []);
 
@@ -48,8 +48,7 @@ const useView = () => {
 			if (status !== 201) {
 				return;
 			} else {
-				const data = await postData.json();
-				setTodos((todo) => [...todo, data]);
+				getTodos();
 			}
 		} catch (err) {
 			console.log(err);

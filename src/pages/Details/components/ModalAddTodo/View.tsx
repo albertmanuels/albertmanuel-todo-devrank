@@ -21,8 +21,8 @@ const ModalAddTodo = (props: ModalAddTodoProps) => {
 	useClickOutside(modalAddRef, () => onClose(false));
 
 	return (
-		<div className={css.modal}>
-			<div data-cy="modal-add" ref={modalAddRef} className={css.modalContent}>
+		<div data-cy="modal-add" className={css.modal}>
+			<div ref={modalAddRef} className={css.modalContent}>
 				<div className={css.modalHeader}>
 					<h4 data-cy="modal-add-title" className={css.modalTitle}>
 						Tambah List Item

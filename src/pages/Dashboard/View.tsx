@@ -28,7 +28,7 @@ const Dashboard = () => {
 					<button
 						data-cy="activity-add-button"
 						className={css.addButton}
-						onClick={handleAddTodos}
+						onClick={() => handleAddTodos()}
 					>
 						<img src={IconPlus} className={css.iconPlus} alt="icon plus" />
 						Tambah

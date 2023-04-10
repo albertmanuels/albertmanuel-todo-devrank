@@ -11,8 +11,8 @@ const ModalDeleteTodo = ({ title, onDelete, onClose }: ModalDeleteProps) => {
 	});
 
 	return (
-		<div className={css.modal}>
-			<div data-cy="modal-delete" ref={modalRef} className={css.modalContent}>
+		<div data-cy="modal-delete" className={css.modal}>
+			<div ref={modalRef} className={css.modalContent}>
 				<div className={css.iconContainer}>
 					<img
 						data-cy="modal-delete-icon"
