@@ -34,6 +34,7 @@ const DetailPages = () => {
 		showAlert,
 		refetch,
 		sortedTodos,
+		titleRef,
 	} = useView();
 
 	return (
@@ -56,6 +57,7 @@ const DetailPages = () => {
 						{isEdit ? (
 							<input
 								type="text"
+								ref={titleRef}
 								data-cy="todo-title"
 								className={css.editTodoTitleInput}
 								value={activityTitle}
@@ -66,6 +68,7 @@ const DetailPages = () => {
 									activityTitle !== "" &&
 									handleUpdateActivityTitle()
 								}
+								onBlur={() => setIsEdit(false)}
 							/>
 						) : (
 							<h1

@@ -1,13 +1,19 @@
 import * as css from "./View.styles";
 import type { ModalDeleteProps } from "./View.types";
 import IconWarning from "../../assets/icon-warning.png";
+import useClickOutside from "../../hooks/useClickOutside";
+import { useRef } from "react";
 
 const ModalDelete = (props: ModalDeleteProps) => {
 	const { title, onClose, onDelete } = props;
+	const modalRef = useRef<HTMLDivElement>(null);
+	useClickOutside(modalRef, () => {
+		onClose();
+	});
 
 	return (
 		<div data-cy="modal-delete" className={css.modal}>
-			<div className={css.modalContent}>
+			<div ref={modalRef} className={css.modalContent}>
 				<div className={css.iconContainer}>
 					<img
 						data-cy="modal-delete-icon"

@@ -1,7 +1,8 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AddTodo, TodoItems } from "./View.types";
 import { useFetchActivity } from "../../hooks/useFetchActivity";
+import useClickOutside from "../../hooks/useClickOutside";
 
 const useView = () => {
 	const { id } = useParams();
@@ -15,6 +16,10 @@ const useView = () => {
 	const [checkedList, setCheckedList] = useState({});
 	const [showAlert, setShowAlert] = useState(false);
 	const [sortedTodos, setSortedTodos] = useState("oldest");
+	const titleRef = useRef<HTMLInputElement>(null);
+
+	useClickOutside(titleRef, () => setIsEdit(false));
+
 	const sortedTodoItems = todoItems.sort((a, b) => {
 		if (sortedTodos === "oldest") {
 			return a.id - b.id;
@@ -152,6 +157,7 @@ const useView = () => {
 		setShowAlert,
 		showAlert,
 		refetch,
+		titleRef,
 	};
 };
 
