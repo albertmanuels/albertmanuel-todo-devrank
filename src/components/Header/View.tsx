@@ -4,7 +4,7 @@ const Header = () => {
 	return (
 		<div className={css.header}>
 			<div className={css.container} data-cy="header-background">
-				<h2>TO DO LIST APP</h2>
+				<h2 data-cy="header-title">TO DO LIST APP</h2>
 			</div>
 		</div>
 	);

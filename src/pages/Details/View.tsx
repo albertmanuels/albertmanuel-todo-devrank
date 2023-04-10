@@ -56,6 +56,7 @@ const DetailPages = () => {
 						{isEdit ? (
 							<input
 								type="text"
+								data-cy="todo-title"
 								className={css.editTodoTitleInput}
 								value={activityTitle}
 								onChange={handleChangeActivityTitle}
@@ -158,7 +159,7 @@ const DetailPages = () => {
 					)}
 				</div>
 
-				{showAlert && <Alert isOpen={showAlert} />}
+				{showAlert && <Alert isOpen={showAlert} text="Todo berhasil dihapus" />}
 			</div>
 		</TemplateLayout>
 	);

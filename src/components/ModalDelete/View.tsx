@@ -6,21 +6,33 @@ const ModalDelete = (props: ModalDeleteProps) => {
 	const { title, onClose, onDelete } = props;
 
 	return (
-		<div className={css.modal}>
+		<div data-cy="modal-delete" className={css.modal}>
 			<div className={css.modalContent}>
 				<div className={css.iconContainer}>
-					<img src={IconWarning} alt="icon warning" />
+					<img
+						data-cy="modal-delete-icon"
+						src={IconWarning}
+						alt="icon warning"
+					/>
 				</div>
-				<p className={css.title}>
+				<p data-cy="modal-delete-title" className={css.title}>
 					Apa anda yakin menghapus activity
 					<br />
 					<b>"{title}"?</b>
 				</p>
 				<div>
-					<button className={css.btnCancel} onClick={onClose}>
+					<button
+						data-cy="modal-delete-cancel-button"
+						className={css.btnCancel}
+						onClick={onClose}
+					>
 						Cancel
 					</button>
-					<button className={css.btnDelete} onClick={onDelete}>
+					<button
+						data-cy="modal-delete-confirm-button"
+						className={css.btnDelete}
+						onClick={onDelete}
+					>
 						Hapus
 					</button>
 				</div>

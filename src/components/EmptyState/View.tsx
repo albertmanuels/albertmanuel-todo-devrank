@@ -5,10 +5,14 @@ import { EmptyStateProps } from "./View.types";
 
 const EmptyState = ({ page, onAddTodo }: EmptyStateProps) => {
 	return (
-		<div className={css.container}>
+		<div
+			className={css.container}
+			data-cy={
+				page === "dashboard" ? "activity-empty-state" : "todo-empty-state"
+			}
+		>
 			{page === "dashboard" && (
 				<img
-					data-cy="activity-empty-state"
 					src={ActivityEmptyState}
 					alt="activity empty state"
 					onClick={onAddTodo}
@@ -17,7 +21,6 @@ const EmptyState = ({ page, onAddTodo }: EmptyStateProps) => {
 
 			{page === "detail" && (
 				<img
-					data-cy="todo-empty-state"
 					src={TodoItemEmptyState}
 					alt="todo item empty state"
 					onClick={onAddTodo}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { CardProps } from "./View.types";
 
 const useView = (props: CardProps) => {
-	const { todos, setTodos } = props;
+	const { todos, setTodos, setShowAlert } = props;
 	const [isOpenModal, setIsOpenModal] = useState(false);
 
 	const handleDeleteTodo = async (id: number) => {
@@ -15,6 +15,7 @@ const useView = (props: CardProps) => {
 			);
 			setIsOpenModal(false);
 			setTodos(todos.filter((todo) => todo.id !== id));
+			setShowAlert(true);
 		} catch (err) {
 			console.log(err);
 		}

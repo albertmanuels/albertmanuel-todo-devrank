@@ -1,12 +1,12 @@
 import * as css from "./View.styles";
 
-const Alert = ({ isOpen }: { isOpen: boolean }) => {
+const Alert = ({ isOpen, text }: { isOpen: boolean; text: string }) => {
 	return (
 		<div className={css.alertContainer} data-cy="modal-information">
 			<div className={css.alert(isOpen)}>
 				<div className={css.alertContent}>
 					<i className={css.iconInformation} data-cy="modal-information-icon" />
-					<p data-cy="modal-information-title">Activity berhasil dihapus</p>
+					<p data-cy="modal-information-title">{text}</p>
 				</div>
 			</div>
 		</div>

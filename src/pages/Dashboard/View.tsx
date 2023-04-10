@@ -5,10 +5,18 @@ import * as css from "./View.styles";
 import IconPlus from "../../assets/icon-plus.svg";
 import { useState } from "react";
 import EmptyState from "../../components/EmptyState/View";
+import Alert from "../../components/Alert/View";
 
 const Dashboard = () => {
-	const { todos, setTodos, handleAddTodos } = useView();
-	const [isOpenModal, setIsOpenModal] = useState(false);
+	const {
+		todos,
+		setTodos,
+		handleAddTodos,
+		isOpenModal,
+		setIsOpenModal,
+		showAlert,
+		setShowAlert,
+	} = useView();
 
 	return (
 		<TemplateLayout pageTitle="Dashboard">
@@ -34,12 +42,13 @@ const Dashboard = () => {
 							{todos.map((todo, idx) => (
 								<Card
 									key={todo.id}
-									data-cy={`activity-item-${idx}`}
+									idx={idx}
 									todo={todo}
 									isOpenModal={isOpenModal}
 									todos={todos}
 									setTodos={setTodos}
 									setIsOpenModal={setIsOpenModal}
+									setShowAlert={setShowAlert}
 								/>
 							))}
 						</>
@@ -47,6 +56,10 @@ const Dashboard = () => {
 						<EmptyState page="dashboard" onAddTodo={handleAddTodos} />
 					)}
 				</div>
+
+				{showAlert && (
+					<Alert isOpen={showAlert} text="Activity berhasil dihapus" />
+				)}
 			</div>
 		</TemplateLayout>
 	);
