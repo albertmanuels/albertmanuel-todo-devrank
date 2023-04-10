@@ -118,6 +118,7 @@ const useView = () => {
 
 	const handleSelectSortItem = (type: string) => {
 		setSortedTodos(type);
+		setIsOpenSortList(false);
 	};
 
 	useEffect(() => {
