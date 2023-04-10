@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import type { AddTodo } from "./View.types";
 import { PRIORITY_OPTIONS } from "../../../../constants";
 
@@ -10,6 +10,7 @@ const useView = () => {
 		priorityValue: "",
 	});
 	const [currentSelected, setCurrentSelected] = useState("");
+	const modalAddRef = useRef<HTMLDivElement>(null);
 
 	const priorityOptionLists = [
 		{
@@ -67,6 +68,7 @@ const useView = () => {
 		handleInputTodoTitle,
 		currentSelected,
 		addTodo,
+		modalAddRef,
 	};
 };
 

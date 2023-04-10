@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import type { EditTodo, ModalEditTodoProps } from "./View.types";
 import { PRIORITY_OPTIONS } from "../../../../constants";
 
@@ -12,6 +12,7 @@ const useView = (props: ModalEditTodoProps) => {
 	});
 	const [onSelect, setOnSelect] = useState(false);
 	const [currentSelected, setCurrentSelected] = useState("");
+	const modalEditRef = useRef<HTMLDivElement>(null);
 
 	const handleSelectPriority = (data: typeof PRIORITY_OPTIONS[number]) => {
 		setOnSelect(true);
@@ -42,6 +43,7 @@ const useView = (props: ModalEditTodoProps) => {
 		editTodo,
 		priorityData,
 		onSelect,
+		modalEditRef,
 	};
 };
 

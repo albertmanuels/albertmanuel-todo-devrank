@@ -7,13 +7,11 @@ import { useRef } from "react";
 const ModalDelete = (props: ModalDeleteProps) => {
 	const { title, onClose, onDelete } = props;
 	const modalRef = useRef<HTMLDivElement>(null);
-	useClickOutside(modalRef, () => {
-		onClose();
-	});
+	useClickOutside(modalRef, () => onClose());
 
 	return (
-		<div data-cy="modal-delete" className={css.modal}>
-			<div ref={modalRef} className={css.modalContent}>
+		<div className={css.modal}>
+			<div data-cy="modal-delete" ref={modalRef} className={css.modalContent}>
 				<div className={css.iconContainer}>
 					<img
 						data-cy="modal-delete-icon"

@@ -2,6 +2,7 @@ import * as css from "./View.styles";
 import { iconDot } from "../../View.styles";
 import { ModalAddTodoProps } from "./View.types";
 import useView from "./View.hook";
+import useClickOutside from "../../../../hooks/useClickOutside";
 
 const ModalAddTodo = (props: ModalAddTodoProps) => {
 	const { onClose, onSave } = props;
@@ -14,11 +15,14 @@ const ModalAddTodo = (props: ModalAddTodoProps) => {
 		handleInputTodoTitle,
 		currentSelected,
 		addTodo,
+		modalAddRef,
 	} = useView();
 
+	useClickOutside(modalAddRef, () => onClose(false));
+
 	return (
-		<div data-cy="modal-add" className={css.modal}>
-			<div className={css.modalContent}>
+		<div className={css.modal}>
+			<div data-cy="modal-add" ref={modalAddRef} className={css.modalContent}>
 				<div className={css.modalHeader}>
 					<h4 data-cy="modal-add-title" className={css.modalTitle}>
 						Tambah List Item

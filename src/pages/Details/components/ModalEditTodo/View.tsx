@@ -3,6 +3,7 @@ import * as css from "./View.styles";
 import { iconDot } from "../../View.styles";
 import { ModalEditTodoProps } from "./View.types";
 import { PRIORITY_OPTIONS } from "../../../../constants";
+import useClickOutside from "../../../../hooks/useClickOutside";
 
 const ModalEditTodo = (props: ModalEditTodoProps) => {
 	const { onClose, onSave, todoData } = props;
@@ -15,11 +16,14 @@ const ModalEditTodo = (props: ModalEditTodoProps) => {
 		editTodo,
 		priorityData,
 		onSelect,
+		modalEditRef,
 	} = useView(props);
 
+	useClickOutside(modalEditRef, () => onClose());
+
 	return (
-		<div className={css.modal} data-cy="modal-add">
-			<div className={css.modalContent}>
+		<div className={css.modal}>
+			<div data-cy="modal-add" ref={modalEditRef} className={css.modalContent}>
 				<div className={css.modalHeader}>
 					<h4 className={css.modalTitle} data-cy="modal-add-title">
 						Ubah List Item
