@@ -18,7 +18,7 @@ const useView = () => {
 	const [sortedTodos, setSortedTodos] = useState("oldest");
 	const titleRef = useRef<HTMLInputElement>(null);
 
-	useClickOutside(titleRef, () => setIsEdit(false));
+	useClickOutside(titleRef, () => handleUpdateActivityTitle());
 
 	const sortedTodoItems = todoItems.sort((a, b) => {
 		if (sortedTodos === "oldest") {

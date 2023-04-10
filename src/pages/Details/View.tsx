@@ -68,7 +68,7 @@ const DetailPages = () => {
 									activityTitle !== "" &&
 									handleUpdateActivityTitle()
 								}
-								onBlur={() => setIsEdit(false)}
+								onBlur={handleUpdateActivityTitle}
 							/>
 						) : (
 							<h1
