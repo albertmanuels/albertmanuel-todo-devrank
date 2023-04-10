@@ -7,13 +7,13 @@ import ModalDelete from "../ModalDelete/View";
 import { Link } from "react-router-dom";
 
 const Card = (props: CardProps) => {
-	const { todo, idx } = props;
+	const { todo } = props;
 	const { isOpenModal, setIsOpenModal, handleDeleteTodo, formattedDate } =
 		useView(props);
 
 	return (
 		<>
-			<div className={css.card} data-cy={`activity-item-${idx}`}>
+			<div className={css.card} data-cy="activity-item">
 				<Link to={`/activity-detail/${todo.id}`}>
 					<div className={css.todoContent} data-cy="activity-body">
 						<h4 data-cy="activity-item-title">{todo.title}</h4>

@@ -95,9 +95,13 @@ const DetailPages = () => {
 								</button>
 
 								{isOpenSortList && (
-									<ul className={css.sortOptionListsContainer}>
+									<ul
+										className={css.sortOptionListsContainer}
+										data-cy="sort-parent"
+									>
 										{sortOptionLists.map((option) => (
 											<li
+												data-cy="sort-seelction"
 												key={option.id}
 												className={css.sortOptionLists}
 												onClick={() => handleSelectSortItem(option.value)}

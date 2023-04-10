@@ -8,7 +8,6 @@ export type Todo = {
 
 export interface CardProps {
 	todo: Todo;
-	idx: number;
 	todos: Array<Todo>;
 	setTodos: Dispatch<SetStateAction<Array<Todo>>>;
 	setIsOpenModal: Dispatch<SetStateAction<boolean>>;

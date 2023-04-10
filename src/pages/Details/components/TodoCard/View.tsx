@@ -19,7 +19,7 @@ const TodoCard = (props: TodoCardProps) => {
 	} = useView(props);
 
 	return (
-		<div className={css.todoItemLists} data-cy="todo-item-0">
+		<div className={css.todoItemLists} data-cy="todo-item">
 			<div className={css.leftSideTodoItem}>
 				<input
 					data-cy="todo-item-checkbox"

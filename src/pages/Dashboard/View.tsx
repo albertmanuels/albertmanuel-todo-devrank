@@ -38,10 +38,9 @@ const Dashboard = () => {
 				<div className={css.container}>
 					{todos.length > 0 ? (
 						<>
-							{todos.map((todo, idx) => (
+							{todos.map((todo) => (
 								<Card
 									key={todo.id}
-									idx={idx}
 									todo={todo}
 									isOpenModal={isOpenModal}
 									todos={todos}

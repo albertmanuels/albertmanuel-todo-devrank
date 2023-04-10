@@ -48,18 +48,16 @@ const ModalAddTodo = (props: ModalAddTodoProps) => {
 						<label data-cy="modal-add-priority-title" htmlFor="list-item">
 							PRIORITY
 						</label>
-						<div data-cy="modal-add-priority-dropdown">
+						<div>
 							<button
+								data-cy="modal-add-priority-dropdown"
 								className={css.btnSelectPriority}
 								onClick={() => setIsOpenPriority(!isOpenPriority)}
 							>
 								{addTodo.priorityTitle === "" ? (
 									"Pilih priority"
 								) : (
-									<div
-										data-cy="modal-add-priority-item"
-										className={css.btnSelectPriorityContent}
-									>
+									<div className={css.btnSelectPriorityContent}>
 										<i className={iconDot(addTodo.priorityValue)} />
 										{addTodo.priorityTitle}
 									</div>
@@ -69,7 +67,7 @@ const ModalAddTodo = (props: ModalAddTodoProps) => {
 								<div className={css.priorityOptionList}>
 									{priorityOptionLists.map((priority) => (
 										<div
-											data-cy={`modal-add-priority-${priority.value}`}
+											data-cy={`modal-add-priority-item`}
 											key={priority.id}
 											className={css.priorityOption}
 											onClick={() => handleSelectPriority(priority)}

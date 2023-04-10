@@ -18,19 +18,25 @@ const ModalEditTodo = (props: ModalEditTodoProps) => {
 	} = useView(props);
 
 	return (
-		<div className={css.modal}>
+		<div className={css.modal} data-cy="modal-add">
 			<div className={css.modalContent}>
 				<div className={css.modalHeader}>
-					<h4 className={css.modalTitle}>Ubah List Item</h4>
+					<h4 className={css.modalTitle} data-cy="modal-add-title">
+						Ubah List Item
+					</h4>
 					<button
+						data-cy="modal-add-close-button"
 						type="button"
 						className={css.btnCloseModal}
 						onClick={onClose}
 					/>
 				</div>
 				<div className={css.modalBody}>
-					<label htmlFor="list-item">NAMA LIST ITEM</label>
+					<label data-cy="modal-add-name-title" htmlFor="list-item">
+						NAMA LIST ITEM
+					</label>
 					<input
+						data-cy="modal-add-name-input"
 						type="text"
 						value={editTodo.title}
 						placeholder="Tambahkan nama list item"
@@ -40,9 +46,12 @@ const ModalEditTodo = (props: ModalEditTodoProps) => {
 					/>
 
 					<div className={css.priority}>
-						<label htmlFor="list-item">PRIORITY</label>
+						<label data-cy="modal-add-priority-title" htmlFor="list-item">
+							PRIORITY
+						</label>
 						<div>
 							<button
+								data-cy="modal-add-priority-dropdown"
 								type="button"
 								className={css.btnSelectPriority}
 								onClick={() => setIsOpenPriority(!isOpenPriority)}
@@ -64,6 +73,8 @@ const ModalEditTodo = (props: ModalEditTodoProps) => {
 								<div className={css.priorityOptionList}>
 									{PRIORITY_OPTIONS.map((priority) => (
 										<div
+											id={String(priority.id)}
+											data-cy="modal-add-priority-item"
 											key={priority.id}
 											className={css.priorityOption}
 											onClick={() => handleSelectPriority(priority)}
@@ -84,6 +95,7 @@ const ModalEditTodo = (props: ModalEditTodoProps) => {
 
 				<div className={css.modalFooter}>
 					<button
+						data-cy="modal-add-save-button"
 						className={css.btnSave}
 						type="submit"
 						onClick={() => {
