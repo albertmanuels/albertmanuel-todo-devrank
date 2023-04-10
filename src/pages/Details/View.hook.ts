@@ -67,7 +67,7 @@ const useView = () => {
 				}
 			);
 
-			const result = await fetchData;
+			const result = fetchData;
 			const status = result.status;
 
 			if (status !== 201) {

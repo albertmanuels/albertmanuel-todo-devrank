@@ -44,7 +44,7 @@ const useView = () => {
 				}
 			);
 
-			const status = await postData.status;
+			const status = postData.status;
 			if (status !== 201) {
 				return;
 			} else {

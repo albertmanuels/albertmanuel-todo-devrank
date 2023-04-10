@@ -104,7 +104,7 @@ const DetailPages = () => {
 									>
 										{sortOptionLists.map((option) => (
 											<li
-												data-cy="sort-seelction"
+												data-cy="sort-selection"
 												key={option.id}
 												className={css.sortOptionLists}
 												onClick={() => handleSelectSortItem(option.value)}

@@ -25,7 +25,7 @@ const useView = (props: TodoCardProps) => {
 				}
 			);
 
-			const status = await fetchData.status;
+			const status = fetchData.status;
 
 			if (status !== 200) return;
 			setTodoItems(todoItems?.filter((todo) => todo.id !== todoId));
